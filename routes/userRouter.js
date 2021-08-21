@@ -48,26 +48,26 @@ router.get("/profile/:id", async (req, res) => {
   }
 });
 
-// upload image
-const storage = multer.diskStorage({
-  destination: "./public/avatars/",
-  filename: function (req, file, cb) {
-    cb(
-      null,
-      file.fieldname + "-" + Date.now() + path.extname(file.originalname)
-    );
-  },
-});
+// Edit user
+router.patch("/edit-user/:id", async (req, res) => {
+  const { id } = req.params;
 
-var upload = multer({ storage: storage }).single("avatar");
+  const { name, age, phone, email, address } = req.body;
 
-router.post("/upload", async (req, res) => {
-  upload(req, res, (err) => {
-    if (err) {
-      res.json("Failed");
-    } else {
-      res.json(`${req.file.originalname}`);
+  await User.findOneAndUpdate(
+    { _id: id },
+    {
+      $set: {
+        name: name,
+        age: age,
+        phone: phone,
+        email: email,
+        address: address,
+      },
     }
-  });
+  );
+
+  res.status(200).json({ message: "User updated sucessfully!" });
 });
+
 export { router };
