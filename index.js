@@ -27,8 +27,11 @@ const corsOptions = { origin: true, credentials: true };
 
 app.use(cors(corsOptions));
 app.use(express.json());
-// app.use(express.static("uploads"));
+
 app.use("/", router);
+app.use("/", async (req, res) => {
+  res.json("Hello Heroku");
+});
 
 app.listen(PORT, () => {
   console.log(`Server connected @ ${PORT}`);
