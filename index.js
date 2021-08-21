@@ -29,10 +29,6 @@ app.use(cors(corsOptions));
 app.use(express.json());
 
 app.use("/", router);
-app.use("/", async (req, res) => {
-  res.json("Hello Heroku");
-});
-
 app.listen(PORT, () => {
   console.log(`Server connected @ ${PORT}`);
 });
