@@ -70,4 +70,13 @@ router.patch("/edit-user/:id", async (req, res) => {
   res.status(200).json({ message: "User updated sucessfully!" });
 });
 
+// Delete user
+router.delete("/delete-user/:id", async (req, res) => {
+  const { id } = req.params;
+
+  await User.findOneAndDelete({ _id: id });
+
+  res.status(200).json({ message: "User deleted sucessfully!" });
+});
+
 export { router };
